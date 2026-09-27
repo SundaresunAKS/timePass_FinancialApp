@@ -73,6 +73,8 @@ object SmsParser {
         Regex("""^\s*Spent\b""", RegexOption.IGNORE_CASE) to "DEBIT",
         Regex("""\bwithdrawn\b""", RegexOption.IGNORE_CASE) to "DEBIT",
         Regex("""\bloaded\s+on\b""", RegexOption.IGNORE_CASE) to "DEBIT",
+        // Card alert emails: "Your Credit Card XX1234 has been used for a transaction of INR".
+        Regex("""\bhas\s+been\s+used\s+for\s+a\s+(?:transaction|purchase)\b""", RegexOption.IGNORE_CASE) to "DEBIT",
 
         // Money in.
         Regex("""\bis\s+credited\s+(?:for|with|by)\b""", RegexOption.IGNORE_CASE) to "CREDIT",
@@ -107,7 +109,8 @@ object SmsParser {
      */
     private val ACCOUNT_PATTERNS: List<Pair<Regex, String>> = listOf(
         Regex("""card\s*(?:no\.?|number)?\s*(?:ending(?:\s+in)?)?\s*[:#]?\s*[*xX]{0,12}(\d{4})\b""", RegexOption.IGNORE_CASE) to "CARD",
-        Regex("""(?:a/?c|account)\s*(?:no\.?|number)?\s*[:#]?\s*[*xX]{1,12}(\d{3,4})\b""", RegexOption.IGNORE_CASE) to "ACCOUNT",
+        // The mask may follow a few clear leading digits: "Account No. 15XXXXXX8607".
+        Regex("""(?:a/?c|account)\s*(?:no\.?|number)?\s*[:#]?\s*\d{0,6}[*xX]{1,12}(\d{3,4})\b""", RegexOption.IGNORE_CASE) to "ACCOUNT",
         Regex("""\bA/?C\s*\*+(\d{3,4})\b""", RegexOption.IGNORE_CASE) to "ACCOUNT",
         Regex("""\*{1,2}(\d{4})\b""") to "ACCOUNT"
     )
@@ -343,7 +346,7 @@ object SmsParser {
     }
 
     /** @return kind ("ACCOUNT"/"CARD") to last-four digits, or nulls when none is named. */
-    private fun extractAccount(body: String): Pair<String?, String?> {
+    internal fun extractAccount(body: String): Pair<String?, String?> {
         for ((regex, kind) in ACCOUNT_PATTERNS) {
             val digits = regex.find(body)?.groupValues?.getOrNull(1)
             if (!digits.isNullOrBlank()) return kind to digits
@@ -354,7 +357,7 @@ object SmsParser {
     /**
      * Identifies the payment mode based on keywords in the SMS body.
      */
-    private fun detectPaymentMode(body: String): String {
+    internal fun detectPaymentMode(body: String): String {
         val lowerBody = body.lowercase()
 
         // Order is deliberate, strongest signal first. Cash and card-present alerts come

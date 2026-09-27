@@ -117,7 +117,7 @@
     <!-- Share export -->
     <string name="share_card_title">Share your export</string>
     <string name="share_export">Share export</string>
-    <string name="export_description">Creates a spreadsheet of every tagged transaction.</string>
+    <string name="export_description">Creates one spreadsheet of every tagged transaction, with a sheet for each account and each category.</string>
     <string name="export_to_drive">Save to Google Drive</string>
     <string name="export_drive_needs_connect">Connect Google Drive on the Backup screen to enable this.</string>
     <string name="export_drive_folder_prompt">Drive folder to save into</string>
@@ -303,7 +303,7 @@ This replaces everything currently in the app.</string>
     </plurals>
     <string name="dashboard_recent">RECENT</string>
     <string name="dashboard_see_all">See all</string>
-    <string name="dashboard_recent_meta">%1$s \u00b7 %2$s</string>
+    <string name="dashboard_recent_meta">%1$s \u00b7 %2$s \u00b7 %3$s</string>
     <string name="pending_refresh">Refresh</string>
     <string name="pending_refreshing">Checking for new messages\u2026</string>
     <plurals name="pending_refresh_found">
@@ -338,4 +338,23 @@ This replaces everything currently in the app.</string>
     <string name="accent_cyan">Cyan</string>
     <string name="accent_brown">Brown</string>
     <string name="accent_slate">Slate</string>
+    <!-- Transaction source -->
+    <string name="source_sms">SMS</string>
+    <string name="source_mail">Mail</string>
+    <string name="source_manual">Manual</string>
+    <string name="source_both">%1$s + %2$s</string>
+
+    <!-- Reading bank emails -->
+    <string name="backup_mail">Read bank emails</string>
+    <string name="backup_mail_off">Off · only SMS are read. Turn on to import bank alerts from Gmail too.</string>
+    <string name="backup_mail_on">Bank alerts in Gmail are imported like SMS · checked %1$s</string>
+    <string name="backup_mail_on_never">Bank alerts in Gmail are imported like SMS</string>
+    <string name="backup_mail_syncing">Reading bank emails…</string>
+    <string name="mail_err_permission">Gmail access was not granted, so emails cannot be read.</string>
+    <string name="mail_err_reconnect">Gmail access has expired. Turn Read bank emails off and on again on the Backup screen.</string>
+    <string name="mail_err_sync">Could not read bank emails. Check your connection and try again.</string>
+    <plurals name="mail_sync_done">
+        <item quantity="one">%d transaction imported from email</item>
+        <item quantity="other">%d transactions imported from email</item>
+    </plurals>
 </resources>

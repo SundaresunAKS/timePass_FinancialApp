@@ -7,7 +7,9 @@ import android.util.Log
 import com.timepass.financialapp.data.local.AppDatabase
 import com.timepass.financialapp.data.local.entity.SmsRawEntity
 import com.timepass.financialapp.data.local.entity.TransactionEntity
+import com.timepass.financialapp.data.local.entity.TransactionSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.time.ZoneId
 
@@ -113,7 +115,9 @@ class SmsReader(
      *
      * @return how many transactions were added
      */
-    suspend fun reconcile(): Int = withContext(Dispatchers.IO) {
+    suspend fun reconcile(): Int = ImportLock.mutex.withLock { reconcileLocked() }
+
+    private suspend fun reconcileLocked(): Int = withContext(Dispatchers.IO) {
         val smsRawDao = database.smsRawDao()
         val transactionDao = database.transactionDao()
 
@@ -170,7 +174,13 @@ class SmsReader(
                             kotlin.math.abs(txn.transactionDate - smsDate) <= DUPLICATE_TOLERANCE_MS &&
                             isPrefixOfEitherWay(txn.description, body)
                     }
-                    if (duplicate) {
+                    // Or the bank's email for the same payment is already on file.
+                    val folded = !duplicate && CrossSourceDedupe.foldIntoExisting(
+                        transactionDao, parsed, smsDate,
+                        TransactionSource.SMS, CrossSourceDedupe.smsRef(sender, body)
+                    ) != CrossSourceDedupe.Outcome.New
+
+                    if (duplicate || folded) {
                         if (deviceSmsId !in seenSmsIds) {
                             smsRawDao.insert(
                                 SmsRawEntity(
@@ -241,7 +251,9 @@ class SmsReader(
      *
      * @return The count of new transactions found and saved
      */
-    suspend fun scanExistingSms(): Int = withContext(Dispatchers.IO) {
+    suspend fun scanExistingSms(): Int = ImportLock.mutex.withLock { scanLocked() }
+
+    private suspend fun scanLocked(): Int = withContext(Dispatchers.IO) {
         val smsRawDao = database.smsRawDao()
         val transactionDao = database.transactionDao()
 
@@ -303,7 +315,11 @@ class SmsReader(
 
                     // Parse the SMS for transaction details
                     val parseResult = SmsParser.parse(body)
-                    if (parseResult != null) {
+                    val isNew = parseResult != null && CrossSourceDedupe.foldIntoExisting(
+                        transactionDao, parseResult, smsDate,
+                        TransactionSource.SMS, CrossSourceDedupe.smsRef(sender, body)
+                    ) == CrossSourceDedupe.Outcome.New
+                    if (parseResult != null && isNew) {
                         val transaction = TransactionEntity(
                             amount = parseResult.amount,
                             transactionType = parseResult.transactionType,

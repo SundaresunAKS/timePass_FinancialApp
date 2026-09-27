@@ -285,8 +285,9 @@ class UncategorizedFragment : Fragment() {
 
         val app = requireActivity().application as FinancialApp
         val reader = com.timepass.financialapp.sms.SmsReader(requireContext(), app.database)
+        val mailReader = com.timepass.financialapp.mail.MailReader(requireContext(), app.database)
 
-        viewModel.refresh(reader) { result ->
+        viewModel.refresh(reader, mailReader) { result ->
             val current = _binding ?: return@refresh
             val message = when (result) {
                 is RefreshResult.Added ->
@@ -296,6 +297,10 @@ class UncategorizedFragment : Fragment() {
                 RefreshResult.NothingNew -> getString(R.string.pending_refresh_none)
                 is RefreshResult.Failed ->
                     getString(R.string.pending_refresh_failed, result.message.orEmpty())
+                is RefreshResult.MailFailed ->
+                    getString(
+                        if (result.needsReconnect) R.string.mail_err_reconnect else R.string.mail_err_sync
+                    )
             }
             Snackbar.make(current.root, message, Snackbar.LENGTH_LONG).show()
         }

@@ -313,7 +313,8 @@ class DashboardFragment : Fragment() {
             row.tvMeta.text = getString(
                 R.string.dashboard_recent_meta,
                 DateUtils.formatDate(txn.transactionDate),
-                TransactionStyling.modeLabel(txn.paymentMode)
+                TransactionStyling.modeLabel(txn.paymentMode),
+                TransactionStyling.sourceLabel(requireContext(), txn.source, txn.confirmedBy)
             )
 
             row.tvAmount.setTextColor(colour)

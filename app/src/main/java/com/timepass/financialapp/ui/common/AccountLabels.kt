@@ -36,8 +36,14 @@ object AccountLabels {
 
     private val HEADER = Regex("""^(?:[A-Za-z]{2}-)?([A-Za-z0-9]{3,11})(?:-[A-Za-z])?$""")
 
-    /** Bank name for a DLT header, or null when the code is not one we name. */
+    /**
+     * Bank name for a DLT header or a bank email address, or null when it is not one we
+     * name. Email senders are recognised by domain; see MailSenderFilter.
+     */
     fun bankOf(sender: String?): String? {
+        if (sender != null && '@' in sender) {
+            return com.timepass.financialapp.mail.MailSenderFilter.bankOf(sender)
+        }
         val code = HEADER.find(sender?.trim().orEmpty())?.groupValues?.get(1) ?: return null
         return BANK_NAMES[code.uppercase()]
     }

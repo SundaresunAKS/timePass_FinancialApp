@@ -14,6 +14,9 @@ sealed class RefreshResult {
     data class Added(val count: Int) : RefreshResult()
     object NothingNew : RefreshResult()
     data class Failed(val message: String?) : RefreshResult()
+
+    /** SMS were read, but Gmail could not be; [smsAdded] still made it in. */
+    data class MailFailed(val smsAdded: Int, val needsReconnect: Boolean) : RefreshResult()
 }
 
 class UncategorizedViewModel(
@@ -25,21 +28,35 @@ class UncategorizedViewModel(
     override val ignored = false
 
     /**
-     * Re-reads the SMS inbox and imports anything that is missing.
+     * Re-reads the SMS inbox and imports anything that is missing, then checks Gmail when
+     * email reading is on.
      *
      * Needed because the dedupe table can claim a message was handled when no transaction
      * exists for it -- most visibly after a restore, which marks the whole inbox as seen
      * and so drops everything that arrived after the backup was taken.
      */
-    fun refresh(reader: com.timepass.financialapp.sms.SmsReader, onDone: (RefreshResult) -> Unit) {
+    fun refresh(
+        reader: com.timepass.financialapp.sms.SmsReader,
+        mailReader: com.timepass.financialapp.mail.MailReader,
+        onDone: (RefreshResult) -> Unit
+    ) {
         viewModelScope.launch {
-            val result = runCatching { reader.reconcile() }
-            onDone(
-                result.fold(
-                    onSuccess = { if (it > 0) RefreshResult.Added(it) else RefreshResult.NothingNew },
-                    onFailure = { RefreshResult.Failed(it.message) }
+            val sms = runCatching { reader.reconcile() }.getOrElse {
+                onDone(RefreshResult.Failed(it.message))
+                return@launch
+            }
+            val mail = runCatching { mailReader.syncIfEnabled() }.getOrElse {
+                android.util.Log.e("UncategorizedVM", "Mail sync failed", it)
+                onDone(
+                    RefreshResult.MailFailed(
+                        smsAdded = sms,
+                        needsReconnect = it is com.timepass.financialapp.backup.BackupError.NeedsReauth
+                    )
                 )
-            )
+                return@launch
+            }
+            val total = sms + mail
+            onDone(if (total > 0) RefreshResult.Added(total) else RefreshResult.NothingNew)
         }
     }
 

@@ -2,6 +2,8 @@ package com.timepass.financialapp.sms
 
 import android.util.Log
 import com.timepass.financialapp.data.local.dao.TransactionDao
+import com.timepass.financialapp.data.local.entity.TransactionSource
+import com.timepass.financialapp.mail.MailParser
 
 /**
  * Brings stored transactions up to date with the current parser.
@@ -29,7 +31,12 @@ object TransactionRepair {
         var updated = 0
 
         for (txn in dao.getAllForBackup()) {
-            val parsed = SmsParser.parse(txn.description)
+            // Each channel has its own parser; a hand-entered row has none and is left alone.
+            val parsed = when (txn.source) {
+                TransactionSource.SMS -> SmsParser.parse(txn.description)
+                TransactionSource.MAIL -> MailParser.parseStored(txn.description)
+                else -> continue
+            }
             if (parsed == null) {
                 stale += txn.id
                 continue

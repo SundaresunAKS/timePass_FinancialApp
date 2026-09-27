@@ -88,6 +88,8 @@ class CategorizedAdapter(
                 TransactionStyling.modeColor(context, transaction.paymentMode)
             )
 
+            TransactionStyling.applySourceTag(binding.chipSource, transaction)
+
             binding.tvSender.text = transaction.sender.orEmpty()
             binding.tvSender.visibility =
                 if (transaction.sender.isNullOrBlank()) View.GONE else View.VISIBLE

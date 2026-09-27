@@ -55,6 +55,32 @@ data class TransactionEntity(
      * without being given a category, and are excluded from all totals.
      */
     val isIgnored: Boolean = false,
+    /** Channel the transaction was first read from; see [TransactionSource]. */
+    val source: String = TransactionSource.SMS,
+    /** Identity of the message this row was read from: the Gmail message id for MAIL. */
+    val sourceRef: String? = null,
+    /**
+     * The other channel that reported the same transaction, e.g. "MAIL" on an SMS row.
+     *
+     * A bank usually sends both an SMS and an email for one payment. Only the first to
+     * arrive becomes a row; the second is recorded here instead of as a duplicate, which
+     * also marks this row as already paired so it cannot absorb a second, different one.
+     */
+    val confirmedBy: String? = null,
+    /**
+     * Identity of the message folded in under [confirmedBy] -- a Gmail message id, or
+     * "sender
+body" for an SMS -- so reading that message again is recognised as already
+     * handled rather than imported as a new row.
+     */
+    val confirmedRef: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )
+
+/** Values of [TransactionEntity.source] and [TransactionEntity.confirmedBy]. */
+object TransactionSource {
+    const val SMS = "SMS"
+    const val MAIL = "MAIL"
+    const val MANUAL = "MANUAL"
+}

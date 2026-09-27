@@ -369,6 +369,83 @@ interface TransactionDao {
     )
     suspend fun removeDuplicates(toleranceMillis: Long = 120_000L): Int
 
+    // --- SMS / email cross-channel dedupe ---
+
+    /**
+     * Rows from another channel that could be the same payment: same amount and direction,
+     * close in time. Account and time-window refinement happens in CrossSourceDedupe.
+     * Manual entries are never candidates -- nothing arrives to confirm them.
+     */
+    @Query(
+        """
+        SELECT * FROM transactions
+        WHERE amount = :amount
+          AND transactionType = :type
+          AND source != :source
+          AND source IN ('SMS', 'MAIL')
+          AND transactionDate >= :fromMillis
+          AND transactionDate <= :toMillis
+        ORDER BY id
+        """
+    )
+    suspend fun findCrossSourceCandidates(
+        amount: Double,
+        type: String,
+        source: String,
+        fromMillis: Long,
+        toMillis: Long
+    ): List<TransactionEntity>
+
+    /** Records that [channel] reported the same payment as row [id]. */
+    @Query(
+        """
+        UPDATE transactions
+        SET confirmedBy = :channel, confirmedRef = :ref, updatedAt = :now
+        WHERE id = :id
+        """
+    )
+    suspend fun markConfirmed(
+        id: Long,
+        channel: String,
+        ref: String?,
+        now: Long = System.currentTimeMillis()
+    )
+
+    // --- Email cutoff cleanup ---
+
+    /** Email rows before [cutoff] that absorbed an SMS, which must come back as SMS rows. */
+    @Query(
+        """
+        SELECT COUNT(*) FROM transactions
+        WHERE source = 'MAIL' AND confirmedBy = 'SMS' AND transactionDate < :cutoff
+          AND isCategorized = 0 AND isIgnored = 0
+        """
+    )
+    suspend fun countMailAbsorbingSmsBefore(cutoff: Long): Int
+
+    /** Drops email rows before [cutoff]; ones the user tagged or ignored are kept. */
+    @Query(
+        """
+        DELETE FROM transactions
+        WHERE source = 'MAIL' AND transactionDate < :cutoff
+          AND isCategorized = 0 AND isIgnored = 0
+        """
+    )
+    suspend fun deleteUntouchedMailBefore(cutoff: Long): Int
+
+    /** Unlinks emails from SMS rows before [cutoff], so those rows read as SMS only. */
+    @Query(
+        """
+        UPDATE transactions SET confirmedBy = NULL, confirmedRef = NULL
+        WHERE confirmedBy = 'MAIL' AND transactionDate < :cutoff
+        """
+    )
+    suspend fun clearMailConfirmationsBefore(cutoff: Long): Int
+
+    /** Whether an email has already become, or been folded into, a transaction. */
+    @Query("SELECT COUNT(*) FROM transactions WHERE sourceRef = :ref OR confirmedRef = :ref")
+    suspend fun countByMessageRef(ref: String): Int
+
     // --- Bulk actions from multi-select ---
 
     @Query(

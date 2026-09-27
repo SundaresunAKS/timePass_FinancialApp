@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.room.Room
 import com.timepass.financialapp.data.local.AppDatabase
 import com.timepass.financialapp.data.local.entity.CategoryEntity
+import com.timepass.financialapp.mail.MailPrefs
+import com.timepass.financialapp.mail.MailSyncWorker
 import com.timepass.financialapp.sms.TransactionRepair
 import com.timepass.financialapp.util.Constants
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +26,8 @@ class FinancialApp : Application() {
                 AppDatabase.MIGRATION_2_3,
                 AppDatabase.MIGRATION_3_4,
                 AppDatabase.MIGRATION_4_5,
-                AppDatabase.MIGRATION_5_6
+                AppDatabase.MIGRATION_5_6,
+                AppDatabase.MIGRATION_6_7
             )
             .build()
     }
@@ -34,6 +37,10 @@ class FinancialApp : Application() {
         seedDefaultCategoriesIfFirstRun()
         repairDuplicates()
         reparseStoredTransactions()
+        // Email is read only while Google is connected on the Backup screen.
+        if (MailPrefs(this).enabled && com.timepass.financialapp.backup.BackupPrefs(this).authorized) {
+            MailSyncWorker.schedule(this)
+        }
     }
 
     /**

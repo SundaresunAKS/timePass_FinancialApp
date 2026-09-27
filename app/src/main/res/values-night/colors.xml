@@ -43,4 +43,7 @@
     <color name="mode_debit_card">#5FD3C4</color>
     <color name="mode_neft">#7EC3F0</color>
     <color name="mode_unknown">#A5B3AC</color>
+    <color name="source_sms">#B0BEC5</color>
+    <color name="source_mail">#FFB74D</color>
+    <color name="source_both">#81C784</color>
 </resources>

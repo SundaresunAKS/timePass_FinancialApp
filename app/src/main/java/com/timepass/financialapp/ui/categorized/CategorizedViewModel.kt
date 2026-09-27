@@ -115,7 +115,8 @@ class CategorizedViewModel(
                     transactionDate = entry.dateMillis,
                     smsDate = entry.dateMillis,
                     isCategorized = true,
-                    isIgnored = false
+                    isIgnored = false,
+                    source = com.timepass.financialapp.data.local.entity.TransactionSource.MANUAL
                 )
             )
             onDone()

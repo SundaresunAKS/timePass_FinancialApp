@@ -59,7 +59,9 @@ Personal, Travel, Health/medical, Rent, Home-Krr, Savings, EmergencySavings, Deb
 7. Email Inbox Reading (Pending - noted 2026-09-27)
 Just like the SMS reading feature, the app should read the email inbox and follow the same process used for SMS:
 
-Same Starting Line: Ignore any bank/credit card email received before April 1st, 2026.
+When to Read Mail: Only read the email inbox if the user has connected their Google account through the Backup screen (backup icon). If they have not connected, the app continues as it is today - SMS only.
+
+Email Starting Line: Emails are read from September 1st, 2026 (SMS still start from April 1st, 2026).
 
 Same Sorting Process: Transaction emails are parsed (amount, debit/credit, mode, account/card last 4 digits) and land in "Uncategorized" first, then move to "Categorized" once a category is picked.
 

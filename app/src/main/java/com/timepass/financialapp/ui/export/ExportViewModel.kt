@@ -12,6 +12,7 @@ import com.timepass.financialapp.R
 import com.timepass.financialapp.backup.BackupPrefs
 import com.timepass.financialapp.backup.BackupRepository
 import com.timepass.financialapp.export.ExcelExporter
+import com.timepass.financialapp.ui.common.AccountLabels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -107,10 +108,12 @@ class ExportViewModel(
                         )
                     }
                     val categories = categoryDao.getAllCategories().first()
-                    val categoryMap = categories.associate { it.id to it.name }
+                    val accountLabels = AccountLabels.build(
+                        transactionDao.getAccountLabelSources().first()
+                    )
 
                     val exporter = ExcelExporter(application)
-                    val path = exporter.export(transactions, categoryMap)
+                    val path = exporter.export(transactions, categories, accountLabels)
                     pruneOldExports()
                     ExportState.Success(path)
                 } catch (t: Throwable) {

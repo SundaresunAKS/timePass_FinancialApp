@@ -2,6 +2,7 @@ package com.timepass.financialapp.backup
 
 import com.timepass.financialapp.data.local.entity.CategoryEntity
 import com.timepass.financialapp.data.local.entity.TransactionEntity
+import com.timepass.financialapp.data.local.entity.TransactionSource
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -105,6 +106,12 @@ object BackupFormat {
                         put("smsDate", t.smsDate)
                         put("isCategorized", t.isCategorized)
                         put("isIgnored", t.isIgnored)
+                        put("accountRef", t.accountRef ?: JSONObject.NULL)
+                        put("accountKind", t.accountKind ?: JSONObject.NULL)
+                        put("source", t.source)
+                        put("sourceRef", t.sourceRef ?: JSONObject.NULL)
+                        put("confirmedBy", t.confirmedBy ?: JSONObject.NULL)
+                        put("confirmedRef", t.confirmedRef ?: JSONObject.NULL)
                     })
                 }
             })
@@ -174,11 +181,13 @@ object BackupFormat {
             val categoryId = o.optStringOrNull("category")?.let { byName[it] }
                 ?: o.optLongOrNull("categoryId")
 
+            val paymentMode = o.optString("paymentMode", "UNKNOWN")
+
             transactions += TransactionEntity(
                 id = o.optLong("id"),
                 amount = o.optDouble("amount"),
                 transactionType = o.optString("transactionType", "DEBIT"),
-                paymentMode = o.optString("paymentMode", "UNKNOWN"),
+                paymentMode = paymentMode,
                 categoryId = categoryId,
                 smsRawId = null,
                 sender = o.optStringOrNull("sender"),
@@ -189,6 +198,15 @@ object BackupFormat {
                 smsDate = o.optLong("smsDate", o.optLong("date")),
                 isCategorized = o.optBoolean("isCategorized", categoryId != null),
                 isIgnored = o.optBoolean("isIgnored"),
+                accountRef = o.optStringOrNull("accountRef"),
+                accountKind = o.optStringOrNull("accountKind"),
+                // Files written before email import have no source: every row then came
+                // from an SMS except the hand-entered ones.
+                source = o.optStringOrNull("source")
+                    ?: if (paymentMode == "MANUAL") TransactionSource.MANUAL else TransactionSource.SMS,
+                sourceRef = o.optStringOrNull("sourceRef"),
+                confirmedBy = o.optStringOrNull("confirmedBy"),
+                confirmedRef = o.optStringOrNull("confirmedRef"),
                 createdAt = o.optLong("createdAt", System.currentTimeMillis()),
                 updatedAt = o.optLong("updatedAt", System.currentTimeMillis())
             )

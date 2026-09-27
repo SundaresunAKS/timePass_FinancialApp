@@ -21,6 +21,7 @@ import com.timepass.financialapp.backup.BackupFrequency
 import com.timepass.financialapp.backup.BackupRepository
 import com.timepass.financialapp.backup.DriveAuth
 import com.timepass.financialapp.databinding.FragmentBackupBinding
+import com.timepass.financialapp.mail.MailAuth
 import com.timepass.financialapp.ui.common.TextInputDialog
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -37,6 +38,23 @@ class BackupFragment : Fragment() {
     }
 
     private val auth by lazy { DriveAuth(requireContext()) }
+    private val mailAuth by lazy { MailAuth(requireContext()) }
+
+    /** Receives the result of the Gmail consent screen. */
+    private val mailConsentLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        val state = if (result.resultCode == Activity.RESULT_OK) {
+            runCatching { mailAuth.resultFromIntent(result.data) }.getOrNull()
+        } else {
+            null
+        }
+        if (state is MailAuth.AuthState.Authorized) {
+            viewModel.onMailAuthorized(state.accessToken, state.email)
+        } else {
+            snack(getString(R.string.mail_err_permission))
+        }
+    }
 
     private val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault())
 
@@ -52,6 +70,7 @@ class BackupFragment : Fragment() {
             .onSuccess { state ->
                 if (state is DriveAuth.AuthState.Authorized) {
                     viewModel.onAuthorized(state.email)
+                    requestMailAccess()
                 } else {
                     snack(getString(R.string.backup_err_permission))
                 }
@@ -77,6 +96,17 @@ class BackupFragment : Fragment() {
         }
         binding.switchCharging.setOnCheckedChangeListener { button, checked ->
             if (button.isPressed) viewModel.setChargingOnly(checked)
+        }
+        binding.switchMail.setOnCheckedChangeListener { button, checked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+            if (checked) {
+                // The switch only stays on once access is actually granted; render()
+                // puts it back until then.
+                button.isChecked = false
+                requestMailAccess()
+            } else {
+                viewModel.disableMail()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -125,8 +155,46 @@ class BackupFragment : Fragment() {
         binding.switchCharging.isChecked = state.chargingOnly
 
         binding.progress.visibility = if (state.busy) View.VISIBLE else View.GONE
+        renderMail(state)
+
         binding.btnBackupNow.isEnabled = state.connected && !state.busy
         binding.btnRestore.isEnabled = state.connected && !state.busy
+    }
+
+    private fun renderMail(state: BackupViewModel.UiState) {
+        val visibility = if (state.googleLinked) View.VISIBLE else View.GONE
+        binding.switchMail.visibility = visibility
+        binding.tvMailStatus.visibility = visibility
+        binding.switchMail.isChecked = state.mailEnabled
+        binding.switchMail.isEnabled = !state.mailSyncing
+        binding.tvMailStatus.text = when {
+            state.mailSyncing -> getString(R.string.backup_mail_syncing)
+            !state.mailEnabled -> getString(R.string.backup_mail_off)
+            state.mailLastSyncAt > 0 ->
+                getString(R.string.backup_mail_on, dateFormat.format(Date(state.mailLastSyncAt)))
+            else -> getString(R.string.backup_mail_on_never)
+        }
+    }
+
+    /**
+     * Asks for read-only Gmail access, straight after the Drive connection. Asked for
+     * separately: reading mail is a bigger ask than writing one backup file, and saying
+     * no here leaves backups working and the app on SMS only.
+     */
+    private fun requestMailAccess() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                when (val state = mailAuth.authorize()) {
+                    is MailAuth.AuthState.Authorized ->
+                        viewModel.onMailAuthorized(state.accessToken, state.email)
+                    is MailAuth.AuthState.NeedsConsent -> mailConsentLauncher.launch(
+                        IntentSenderRequest.Builder(state.pendingIntent).build()
+                    )
+                }
+            } catch (e: Exception) {
+                snack(getString(R.string.mail_err_permission))
+            }
+        }
     }
 
     private fun handle(event: BackupViewModel.Event) = when (event) {
@@ -137,6 +205,9 @@ class BackupFragment : Fragment() {
         // The restored theme lives in the activity's theme, applied at onCreate, so
         // it only appears once the activity is rebuilt.
         BackupViewModel.Event.SettingsRestored -> requireActivity().recreate()
+        is BackupViewModel.Event.MailImported ->
+            snack(resources.getQuantityString(R.plurals.mail_sync_done, event.count, event.count))
+        BackupViewModel.Event.MailFailed -> snack(getString(R.string.mail_err_sync))
     }
 
     /** Errors carry their own message; the detail is appended only when it adds something. */
@@ -150,7 +221,10 @@ class BackupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 when (val state = auth.authorize()) {
-                    is DriveAuth.AuthState.Authorized -> viewModel.onAuthorized(state.email)
+                    is DriveAuth.AuthState.Authorized -> {
+                        viewModel.onAuthorized(state.email)
+                        requestMailAccess()
+                    }
                     is DriveAuth.AuthState.NeedsConsent ->
                         consentLauncher.launch(
                             IntentSenderRequest.Builder(state.pendingIntent).build()

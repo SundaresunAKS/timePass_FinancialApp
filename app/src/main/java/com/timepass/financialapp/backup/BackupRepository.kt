@@ -205,6 +205,7 @@ class BackupRepository(
             database.transactionDao().deleteAll()
             database.categoryDao().deleteAll()
             database.smsRawDao().deleteAll()
+            database.mailRawDao().deleteAll()
 
             database.categoryDao().insertAll(backup.categories)
             database.transactionDao().insertAll(backup.transactions)
@@ -218,6 +219,12 @@ class BackupRepository(
         // wrong for every message that arrived after it was taken -- those were discarded
         // and could never come back. Reconcile keeps the first property and fixes the second.
         runCatching { SmsReader(context, database).reconcile() }
+
+        // Same for email: a full re-sync from the cutoff. Restored rows carry their Gmail
+        // message ids, so emails already represented are recognised rather than re-added.
+        val mailPrefs = com.timepass.financialapp.mail.MailPrefs(context)
+        mailPrefs.lastSyncAt = 0L
+        runCatching { com.timepass.financialapp.mail.MailReader(context, database, mailPrefs).syncIfEnabled() }
 
         // A backup written by an older build carries that build's parse of every message,
         // and nothing else would ever revisit those rows -- the startup re-parse runs once

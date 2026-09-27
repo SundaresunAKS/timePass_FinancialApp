@@ -12,6 +12,9 @@ import com.timepass.financialapp.backup.BackupFrequency
 import com.timepass.financialapp.backup.BackupPrefs
 import com.timepass.financialapp.backup.BackupRepository
 import com.timepass.financialapp.backup.BackupWorker
+import com.timepass.financialapp.mail.MailPrefs
+import com.timepass.financialapp.mail.MailReader
+import com.timepass.financialapp.mail.MailSyncWorker
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +26,7 @@ import kotlinx.coroutines.launch
 class BackupViewModel(app: Application) : AndroidViewModel(app) {
 
     private val prefs = BackupPrefs(app)
+    private val mailPrefs = MailPrefs(app)
     private val repo = BackupRepository(
         app,
         (app as FinancialApp).database,
@@ -39,7 +43,12 @@ class BackupViewModel(app: Application) : AndroidViewModel(app) {
         val frequency: BackupFrequency = BackupFrequency.OFF,
         val wifiOnly: Boolean = true,
         val chargingOnly: Boolean = false,
-        val busy: Boolean = false
+        val busy: Boolean = false,
+        /** A Google account is linked, which is what email reading depends on. */
+        val googleLinked: Boolean = false,
+        val mailEnabled: Boolean = false,
+        val mailSyncing: Boolean = false,
+        val mailLastSyncAt: Long = 0L
     )
 
     /** One-shot messages: errors, confirmations, and a restore offer. */
@@ -59,6 +68,9 @@ class BackupViewModel(app: Application) : AndroidViewModel(app) {
          * show. Separate from [Message] because only the restore path needs it.
          */
         object SettingsRestored : Event()
+
+        data class MailImported(val count: Int) : Event()
+        object MailFailed : Event()
     }
 
     private val _state = MutableStateFlow(UiState())
@@ -81,8 +93,43 @@ class BackupViewModel(app: Application) : AndroidViewModel(app) {
             lastBackupSize = prefs.lastBackupSize,
             frequency = prefs.frequency,
             wifiOnly = prefs.wifiOnly,
-            chargingOnly = prefs.chargingOnly
+            chargingOnly = prefs.chargingOnly,
+            googleLinked = prefs.authorized,
+            mailEnabled = prefs.authorized && mailPrefs.enabled,
+            mailLastSyncAt = mailPrefs.lastSyncAt
         )
+    }
+
+    /**
+     * Gmail access granted: turn email reading on, schedule the background check and
+     * import right away. The first run reaches back to the email cutoff (September 1).
+     */
+    fun onMailAuthorized(accessToken: String, email: String?) {
+        mailPrefs.enabled = true
+        email?.let { mailPrefs.accountEmail = it }
+        MailSyncWorker.schedule(getApplication())
+        _state.value = _state.value.copy(mailSyncing = true)
+        refresh()
+
+        viewModelScope.launch {
+            val app = getApplication<Application>()
+            val result = runCatching {
+                MailReader(app, (app as FinancialApp).database, mailPrefs).sync(accessToken)
+            }
+            _state.value = _state.value.copy(mailSyncing = false)
+            refresh()
+            result.exceptionOrNull()?.let {
+                android.util.Log.e("BackupViewModel", "First mail sync failed", it)
+            }
+            _events.send(result.fold({ Event.MailImported(it) }, { Event.MailFailed }))
+        }
+    }
+
+    /** Stops reading email. Rows already imported stay; they may be tagged. */
+    fun disableMail() {
+        mailPrefs.enabled = false
+        MailSyncWorker.cancel(getApplication())
+        refresh()
     }
 
     /**
@@ -236,6 +283,9 @@ class BackupViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             runCatching { repo.disconnect() }
             BackupWorker.cancel(getApplication())
+            // Email reading depends on this connection, so it goes with it.
+            mailPrefs.enabled = false
+            MailSyncWorker.cancel(getApplication())
             refresh()
         }
     }

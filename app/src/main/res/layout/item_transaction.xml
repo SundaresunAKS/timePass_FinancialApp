@@ -84,7 +84,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Tags: category + payment mode -->
+            <!-- Tags: category + payment mode + source -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,8 +107,17 @@
                     style="@style/Widget.FinancialApp.Tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_xs"
                     android:background="@drawable/bg_pill"
                     tools:text="UPI" />
+
+                <TextView
+                    android:id="@+id/chipSource"
+                    style="@style/Widget.FinancialApp.Tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill"
+                    tools:text="SMS + Mail" />
             </LinearLayout>
 
             <TextView

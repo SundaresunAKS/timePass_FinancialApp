@@ -48,6 +48,26 @@
                     android:layout_marginTop="@dimen/spacing_md"
                     android:text="@string/backup_connect" />
 
+                <!-- Email import rides on this connection; hidden until an account is linked. -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:text="@string/backup_mail"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvMailStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="@dimen/text_body"
+                    android:visibility="gone"
+                    tools:text="Bank alerts in Gmail are imported like SMS"
+                    tools:visibility="visible" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDisconnect"
                     style="@style/Widget.Material3.Button.TextButton"

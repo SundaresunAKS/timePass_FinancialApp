@@ -67,6 +67,8 @@ class UncategorizedAdapter(
             )
             binding.chipCategory.visibility = View.GONE
 
+            TransactionStyling.applySourceTag(binding.chipSource, transaction)
+
             binding.tvSender.text = transaction.sender.orEmpty()
             binding.tvSender.visibility =
                 if (transaction.sender.isNullOrBlank()) View.GONE else View.VISIBLE

@@ -98,6 +98,11 @@
     <color name="mode_neft">#0277BD</color>
     <color name="mode_unknown">#78909C</color>
 
+    <!-- Where a transaction was read from -->
+    <color name="source_sms">#546E7A</color>
+    <color name="source_mail">#EF6C00</color>
+    <color name="source_both">#2E7D32</color>
+
     <!-- Category Colors (seeded defaults) -->
     <color name="cat_personal">#E91E63</color>
     <color name="cat_travel">#9C27B0</color>

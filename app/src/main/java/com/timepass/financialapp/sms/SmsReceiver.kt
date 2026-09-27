@@ -8,9 +8,11 @@ import android.util.Log
 import com.timepass.financialapp.FinancialApp
 import com.timepass.financialapp.data.local.entity.SmsRawEntity
 import com.timepass.financialapp.data.local.entity.TransactionEntity
+import com.timepass.financialapp.data.local.entity.TransactionSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withLock
 
 /**
  * BroadcastReceiver for incoming SMS messages.
@@ -32,7 +34,7 @@ class SmsReceiver : BroadcastReceiver() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                processIncomingSms(context, intent)
+                ImportLock.mutex.withLock { processIncomingSms(context, intent) }
             } catch (e: Exception) {
                 Log.e(TAG, "Error processing incoming SMS", e)
             } finally {
@@ -86,7 +88,12 @@ class SmsReceiver : BroadcastReceiver() {
 
                 // Parse the SMS
                 val parseResult = SmsParser.parse(body)
-                if (parseResult != null) {
+                // The bank's email for this payment may have arrived first.
+                val isNew = parseResult != null && CrossSourceDedupe.foldIntoExisting(
+                    transactionDao, parseResult, smsDate,
+                    TransactionSource.SMS, CrossSourceDedupe.smsRef(sender, body)
+                ) == CrossSourceDedupe.Outcome.New
+                if (parseResult != null && isNew) {
                     val transaction = TransactionEntity(
                         amount = parseResult.amount,
                         transactionType = parseResult.transactionType,

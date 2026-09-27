@@ -5,21 +5,26 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.timepass.financialapp.data.local.dao.CategoryDao
+import com.timepass.financialapp.data.local.dao.MailRawDao
 import com.timepass.financialapp.data.local.dao.SmsRawDao
 import com.timepass.financialapp.data.local.dao.TransactionDao
 import com.timepass.financialapp.data.local.entity.CategoryEntity
+import com.timepass.financialapp.data.local.entity.MailRawEntity
 import com.timepass.financialapp.data.local.entity.SmsRawEntity
 import com.timepass.financialapp.data.local.entity.TransactionEntity
 
 @Database(
-    entities = [TransactionEntity::class, CategoryEntity::class, SmsRawEntity::class],
-    version = 6,
+    entities = [
+        TransactionEntity::class, CategoryEntity::class, SmsRawEntity::class, MailRawEntity::class
+    ],
+    version = 7,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
     abstract fun categoryDao(): CategoryDao
     abstract fun smsRawDao(): SmsRawDao
+    abstract fun mailRawDao(): MailRawDao
 
     companion object {
 
@@ -83,6 +88,42 @@ abstract class AppDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE transactions ADD COLUMN accountRef TEXT")
                 db.execSQL("ALTER TABLE transactions ADD COLUMN accountKind TEXT")
                 db.execSQL("CREATE INDEX IF NOT EXISTS index_transactions_accountRef ON transactions(accountRef)")
+            }
+        }
+
+        /**
+         * v7 reads bank emails as well as SMS: `transactions.source` says which channel a
+         * row came from, `confirmedBy` records the other channel reporting the same
+         * payment (the refs identify the messages), and `mail_raw` is the email dedupe table.
+         *
+         * Every existing row came from an SMS except the hand-entered ones, which are the
+         * only rows with the MANUAL payment mode.
+         */
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE transactions ADD COLUMN source TEXT NOT NULL DEFAULT 'SMS'")
+                db.execSQL("ALTER TABLE transactions ADD COLUMN sourceRef TEXT")
+                db.execSQL("ALTER TABLE transactions ADD COLUMN confirmedBy TEXT")
+                db.execSQL("ALTER TABLE transactions ADD COLUMN confirmedRef TEXT")
+                db.execSQL("UPDATE transactions SET source = 'MANUAL' WHERE paymentMode = 'MANUAL'")
+
+                // Must match what Room generates for MailRawEntity, or schema validation fails.
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS mail_raw (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        messageId TEXT NOT NULL,
+                        sender TEXT NOT NULL,
+                        subject TEXT NOT NULL,
+                        receivedAt INTEGER NOT NULL,
+                        isProcessed INTEGER NOT NULL,
+                        createdAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS index_mail_raw_messageId ON mail_raw (messageId)"
+                )
             }
         }
 

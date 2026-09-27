@@ -26,6 +26,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.timepass.financialapp.databinding.ActivityMainBinding
 import com.timepass.financialapp.sms.SmsReader
+import com.timepass.financialapp.mail.MailReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -143,6 +144,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             checkAndRequestSmsPermissions()
+            syncMailInBackground()
         }
     }
 
@@ -307,6 +309,18 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
         const val STATE_UNLOCKED = "unlocked"
+    }
+
+    /**
+     * Picks up bank emails that arrived while the app was closed. Silent on failure: a
+     * lapsed Gmail consent is reported where the user can fix it, on Pending's refresh.
+     */
+    private fun syncMailInBackground() {
+        val app = application as FinancialApp
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching { MailReader(this@MainActivity, app.database).syncIfEnabled() }
+                .onFailure { android.util.Log.w("MainActivity", "Mail sync skipped: $it") }
+        }
     }
 
     private fun onSmsPermissionGranted() {

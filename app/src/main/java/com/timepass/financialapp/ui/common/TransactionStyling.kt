@@ -8,6 +8,8 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.timepass.financialapp.R
+import com.timepass.financialapp.data.local.entity.TransactionEntity
+import com.timepass.financialapp.data.local.entity.TransactionSource
 
 /**
  * Shared colour/label rules for transaction rows, so the Uncategorized and Categorized
@@ -35,6 +37,48 @@ object TransactionStyling {
             else -> R.color.mode_unknown
         }
         return ContextCompat.getColor(context, res)
+    }
+
+    /**
+     * Where the row came from: "SMS", "Mail", or "SMS + Mail" when the bank sent both and
+     * the second was folded into the first.
+     */
+    fun sourceLabel(context: Context, source: String, confirmedBy: String?): String {
+        fun name(channel: String) = context.getString(
+            when (channel) {
+                TransactionSource.MAIL -> R.string.source_mail
+                TransactionSource.MANUAL -> R.string.source_manual
+                else -> R.string.source_sms
+            }
+        )
+        // Always SMS first, whichever arrived first, so the pair reads the same everywhere.
+        return if (confirmedBy != null) {
+            context.getString(R.string.source_both, name(TransactionSource.SMS), name(TransactionSource.MAIL))
+        } else {
+            name(source)
+        }
+    }
+
+    @ColorInt
+    fun sourceColor(context: Context, source: String, confirmedBy: String?): Int =
+        ContextCompat.getColor(
+            context,
+            when {
+                confirmedBy != null -> R.color.source_both
+                source == TransactionSource.MAIL -> R.color.source_mail
+                source == TransactionSource.MANUAL -> R.color.mode_unknown
+                else -> R.color.source_sms
+            }
+        )
+
+    /** Paints the source tag on a transaction row. */
+    fun applySourceTag(view: TextView, transaction: TransactionEntity) {
+        val context = view.context
+        applyTag(
+            view,
+            sourceLabel(context, transaction.source, transaction.confirmedBy),
+            sourceColor(context, transaction.source, transaction.confirmedBy)
+        )
     }
 
     /** Payment-mode words that stay fully capitalised rather than title-cased. */
