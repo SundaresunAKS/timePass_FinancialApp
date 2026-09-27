@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      Day-to-day screens only. Manage Categories, Export, Backup and Theme live behind
+      Settings so this list stays short enough to scan without reading it.
+    -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboardFragment"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/nav_dashboard" />
+
+        <item
+            android:id="@+id/uncategorizedFragment"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="@string/nav_uncategorized" />
+
+        <item
+            android:id="@+id/categorizedFragment"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="@string/nav_categorized" />
+
+        <item
+            android:id="@+id/ignoredFragment"
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"
+            android:title="@string/nav_ignored" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_settings" />
+    </group>
+</menu>

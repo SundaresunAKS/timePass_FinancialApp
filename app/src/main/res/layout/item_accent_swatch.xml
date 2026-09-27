@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One colour in the accent grid. The tick is drawn inside the circle rather than beside a
+  label, so the grid reads as colours first and names second.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/spacing_sm"
+    android:paddingBottom="@dimen/spacing_sm">
+
+    <FrameLayout
+        android:layout_width="@dimen/accent_swatch_size"
+        android:layout_height="@dimen/accent_swatch_size">
+
+        <View
+            android:id="@+id/viewSwatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/ivSelected"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@android:color/white"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvSwatchName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="@dimen/text_caption"
+        tools:text="Indigo" />
+
+</LinearLayout>

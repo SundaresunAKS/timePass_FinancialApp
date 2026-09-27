@@ -1,0 +1,33 @@
+I need android app which would manage my all financial trancations.
+* Read all my bank and credit cards's debit and credit SMS in my mobile.
+* financial record start's from the 1st of April 2026. ie ignore the previous txds.
+* My Finalcial categaries are 
+		Personal
+		Travel
+		Health/medical
+		Rent
+		Home-Krr
+		Savings
+		EmergencySavings
+		Debt
+		Parumal Box
+		Mva Acc
+		ShortLoan
+		Income
+		ReturnShortLoan
+		Food
+		Fuel
+		Loan
+		Others
+		Savings-ToDad
+		Savings-PPF
+* The categaries should be addable and editable through menu
+* based on the categries plot the pie chart in dash board.
+* I need option to choose the month and year. based on that show the dashboard's chart.
+* In menu, i need options like "dashboard", "Txd Categay", "SMS-categories", "SMS-uncategories" and so.
+* Every thing based on the current month and year of choosen. if i want to view previous months txt i would able to view and edit that.
+* if i click "SMS-uncategories", it will show the all SMS(bank and credit card txds). i need option to choose the catageries of that.
+* once i done that, it will moved to "SMS-categories". In "SMS-uncategories", i need option to change that.
+* cased on debit and credit and the cateries, dash board content should show.
+
+*Based on all that, final thing would be saved as a excal in local or google drive(based on the configure mail). that excel should contain, data, amt, categary, mode(eaidher UPI or credircard) and descryption(full SMS content).

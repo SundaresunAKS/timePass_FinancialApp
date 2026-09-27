@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_md">
+
+    <!-- Year stepper -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/bg_month_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnPrevYear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/previous_month"
+            android:src="@drawable/ic_chevron_left"
+            app:tint="?attr/colorOnPrimary" />
+
+        <TextView
+            android:id="@+id/tvYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            tools:text="2026" />
+
+        <ImageButton
+            android:id="@+id/btnNextYear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/next_month"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="?attr/colorOnPrimary" />
+    </LinearLayout>
+
+    <!-- 12 month cells, populated in code -->
+    <GridLayout
+        android:id="@+id/gridMonths"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:alignmentMode="alignBounds"
+        android:columnCount="3"
+        android:useDefaultMargins="false" />
+
+</LinearLayout>

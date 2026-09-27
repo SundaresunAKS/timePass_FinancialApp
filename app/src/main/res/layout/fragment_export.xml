@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One card, not two: creating the file and deciding where it goes are a single task, and
+  splitting them left the second card sitting empty until an export existed.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/export_to_excel"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/export_description"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="@dimen/text_body" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExportExcel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:text="@string/export_to_excel" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:background="@color/outline_variant" />
+
+                <TextView
+                    android:id="@+id/tvExportFileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:text="@string/no_export_yet"
+                    android:textColor="@color/on_surface"
+                    android:textSize="@dimen/text_body" />
+
+                <TextView
+                    android:id="@+id/tvExportMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="@dimen/text_caption"
+                    android:visibility="gone"
+                    tools:text="4.1 kB, saved 23 Sept 2026" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShareExport"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:enabled="false"
+                    android:text="@string/share_export" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExportToDrive"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:enabled="false"
+                    android:text="@string/export_to_drive" />
+
+                <TextView
+                    android:id="@+id/tvDriveHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/export_drive_needs_connect"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="@dimen/text_caption"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvExportStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:textColor="@color/error"
+                    android:textSize="@dimen/text_body"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

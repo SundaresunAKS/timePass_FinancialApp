@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The drawer opens from the right, so its button belongs on the right. A toolbar action is
+  the only way to get it there: the navigation icon slot is fixed to the start edge.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_open_drawer"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/open_drawer"
+        app:showAsAction="always" />
+</menu>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scoped deliberately to the exports folder rather than the whole external files dir,
+  so a share grant can never reach anything else the app stores.
+-->
+<paths>
+    <external-files-path
+        name="exports"
+        path="Documents/" />
+</paths>

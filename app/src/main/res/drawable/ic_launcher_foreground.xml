@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Rupee symbol centered -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,32h24v4H46.5c1.5,3.5 4.5,6 8.5,7H66v4H55c-1,0 -2,0.3 -2.8,0.8L64,64h-7L46.5,49.5c-0.8,-0.8 -1.8,-1.5 -3,-2C42.5,47 41.5,46 41,45H66v-4H41c-0.2,-1 -0.3,-2 -0.3,-3H66v-4H42v-2z" />
+</vector>

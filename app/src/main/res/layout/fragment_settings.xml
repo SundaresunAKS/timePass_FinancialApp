@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Settings hub. The destinations here used to be top-level drawer entries; they are
+  gathered behind one entry so the drawer lists only the things you look at daily.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <TextView
+            style="@style/TextAppearance.FinancialApp.SectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_section_data" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/rowCategories"
+                    layout="@layout/view_settings_row" />
+
+                <View style="@style/Widget.FinancialApp.SettingsDivider" />
+
+                <include
+                    android:id="@+id/rowExport"
+                    layout="@layout/view_settings_row" />
+
+                <View style="@style/Widget.FinancialApp.SettingsDivider" />
+
+                <include
+                    android:id="@+id/rowBackup"
+                    layout="@layout/view_settings_row" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/TextAppearance.FinancialApp.SectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="@string/settings_section_security" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/rowBiometric"
+                layout="@layout/view_settings_switch_row" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/TextAppearance.FinancialApp.SectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="@string/settings_section_appearance" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/rowTheme"
+                layout="@layout/view_settings_row" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/TextAppearance.FinancialApp.SectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="@string/settings_section_app" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/rowAbout"
+                layout="@layout/view_settings_row" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

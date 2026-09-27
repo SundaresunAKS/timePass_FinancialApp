@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <!--
+      An empty label rather than no label: NavigationUI only sets the toolbar title when a
+      destination declares one, so dropping the attribute would leave whatever title the
+      previous screen set still showing here.
+    -->
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.timepass.financialapp.ui.dashboard.DashboardFragment"
+        android:label=""
+        tools:layout="@layout/fragment_dashboard">
+
+        <!-- The account header leads to where the account is managed. -->
+        <action
+            android:id="@+id/action_dashboard_to_settings"
+            app:destination="@id/settingsFragment" />
+
+        <action
+            android:id="@+id/action_dashboard_to_pending"
+            app:destination="@id/uncategorizedFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/uncategorizedFragment"
+        android:name="com.timepass.financialapp.ui.uncategorized.UncategorizedFragment"
+        android:label="@string/nav_uncategorized"
+        tools:layout="@layout/fragment_uncategorized" />
+
+    <fragment
+        android:id="@+id/categorizedFragment"
+        android:name="com.timepass.financialapp.ui.categorized.CategorizedFragment"
+        android:label="@string/nav_categorized"
+        tools:layout="@layout/fragment_categorized" />
+
+    <fragment
+        android:id="@+id/ignoredFragment"
+        android:name="com.timepass.financialapp.ui.ignored.IgnoredFragment"
+        android:label="@string/nav_ignored"
+        tools:layout="@layout/fragment_ignored" />
+
+    <!--
+      Settings is the only drawer entry for the four screens below it; each is reached
+      through an action from here, so Up from any of them lands back on Settings.
+    -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.timepass.financialapp.ui.settings.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settings_to_categories"
+            app:destination="@id/categoryManagementFragment" />
+
+        <action
+            android:id="@+id/action_settings_to_export"
+            app:destination="@id/exportFragment" />
+
+        <action
+            android:id="@+id/action_settings_to_backup"
+            app:destination="@id/backupFragment" />
+
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.timepass.financialapp.ui.about.AboutFragment"
+        android:label="@string/nav_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/categoryManagementFragment"
+        android:name="com.timepass.financialapp.ui.category.CategoryManagementFragment"
+        android:label="@string/nav_categories"
+        tools:layout="@layout/fragment_category_management" />
+
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="com.timepass.financialapp.ui.backup.BackupFragment"
+        android:label="@string/nav_backup"
+        tools:layout="@layout/fragment_backup" />
+
+    <fragment
+        android:id="@+id/exportFragment"
+        android:name="com.timepass.financialapp.ui.export.ExportFragment"
+        android:label="@string/nav_export"
+        tools:layout="@layout/fragment_export" />
+
+</navigation>

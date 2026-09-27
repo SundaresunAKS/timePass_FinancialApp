@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Expense Tracker</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_uncategorized">Pending</string>
+    <string name="nav_categorized">Tagged</string>
+    <string name="nav_categories">Manage Categories</string>
+    <string name="nav_export">Export</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="total_income">Total Income</string>
+    <string name="total_expense">Total Expense</string>
+    <string name="balance">Balance</string>
+    <string name="no_data">Nothing tagged for this month</string>
+    <string name="export_nothing_tagged">Nothing is tagged yet, so there is nothing to export</string>
+
+    <!-- Uncategorized -->
+    <string name="uncategorized_title">Pending</string>
+    <string name="uncategorized_empty">Nothing pending.\nAll caught up!</string>
+    <string name="tap_to_categorize">Tap to tag</string>
+
+    <!-- Categorized -->
+    <string name="categorized_title">Tagged</string>
+    <string name="categorized_empty">Nothing tagged for this month</string>
+    <string name="tap_to_recategorize">Tap to change tag</string>
+
+    <!-- Category Management -->
+    <string name="categories_title">Manage Categories</string>
+    <string name="add_category">Add Category</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="category_name">Category Name</string>
+    <string name="category_name_required">Category name is required</string>
+    <string name="category_delete_confirm">Are you sure you want to delete \"%1$s\"?</string>
+    <string name="category_in_use">Cannot delete: this category has transactions assigned to it</string>
+    <string name="is_income_category">This is an income category</string>
+
+    <!-- Category Picker -->
+    <string name="pick_category">Pick a Category</string>
+
+    <!-- Month Picker -->
+    <string name="select_month">Select Month</string>
+
+    <!-- Export -->
+    <string name="export_title">Export Data</string>
+    <string name="export_to_excel">Export to Excel</string>
+    <string name="export_success">Exported successfully!</string>
+    <string name="export_error">Export failed: %1$s</string>
+    <string name="upload_to_drive">Upload to Google Drive</string>
+    <string name="drive_upload_success">Uploaded to Google Drive</string>
+    <string name="drive_not_linked">Link Google Drive first</string>
+    <string name="link_google_drive">Link Google Drive</string>
+    <string name="unlink_google_drive">Unlink Google Drive</string>
+
+    <!-- SMS Permission -->
+    <string name="sms_permission_title">SMS Permission Required</string>
+    <string name="sms_permission_message">This app reads bank transaction SMS to automatically track your expenses. No SMS data leaves your device.</string>
+    <string name="grant_permission">Grant Access</string>
+    <string name="skip_permission">Skip</string>
+    <string name="sms_permission_denied">SMS access denied. You can grant it later from Settings.</string>
+    <string name="scanning_sms">Scanning existing messages&#8230;</string>
+
+    <!-- General -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="ok">OK</string>
+    <string name="rupee_symbol">&#x20B9;</string>
+    <string name="amount_format">&#x20B9;%1$s</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigation drawer</string>
+    <!-- Filters -->
+    <string name="previous_month">Previous month</string>
+    <string name="next_month">Next month</string>
+    <string name="search_hint">Search merchant or SMS text</string>
+    <string name="clear_search">Clear search</string>
+    <string name="filter_all">All</string>
+    <string name="filter_debit">Money out</string>
+    <string name="filter_credit">Money in</string>
+    <string name="filter_category">Category</string>
+    <string name="filter_direction">Direction</string>
+    <string name="filter_mode">Mode</string>
+    <string name="filter_sender">Sender</string>
+    <plurals name="delete_confirm">
+        <item quantity="one">Delete this transaction? This cannot be undone.</item>
+        <item quantity="other">Delete these %1$d transactions? This cannot be undone.</item>
+    </plurals>
+    <plurals name="delete_done">
+        <item quantity="one">%1$d transaction deleted</item>
+        <item quantity="other">%1$d transactions deleted</item>
+    </plurals>
+    <string name="add_transaction">Add transaction</string>
+    <string name="add_amount">Amount</string>
+    <string name="add_description">What was it for?</string>
+    <string name="add_pick_category">Category</string>
+    <string name="add_date">Date</string>
+    <string name="add_amount_required">Enter an amount</string>
+    <string name="add_description_required">Enter a description</string>
+    <string name="add_category_required">Pick a category</string>
+    <string name="add_no_categories">Add a category first, under Settings \u2192 Manage Categories.</string>
+    <string name="add_saved">Added to Tagged</string>
+    <string name="dashboard_all_accounts">All accounts</string>
+    <string name="filter_account">Account</string>
+    <string name="filter_account_label">•••• %1$s</string>
+    <string name="filter_account_card">Card \u2022\u2022\u2022\u2022 %1$s</string>
+    <string name="filter_account_bank">A/c \u2022\u2022\u2022\u2022 %1$s</string>
+    <string name="filter_all_senders">All senders</string>
+    <string name="filter_all_modes">All modes</string>
+    <string name="filter_clear">Clear</string>
+    <string name="filter_all_categories">All categories</string>
+    <string name="empty_hint_filters">Try another month, or clear the filters.</string>
+    <string name="result_count">%1$d of %2$d · %3$s</string>
+    <string name="select_month_year">Select month</string>
+    <!-- Share export -->
+    <string name="share_card_title">Share your export</string>
+    <string name="share_export">Share export</string>
+    <string name="export_description">Creates a spreadsheet of every tagged transaction.</string>
+    <string name="export_to_drive">Save to Google Drive</string>
+    <string name="export_drive_needs_connect">Connect Google Drive on the Backup screen to enable this.</string>
+    <string name="export_drive_folder_prompt">Drive folder to save into</string>
+    <string name="export_drive_done">Saved to Google Drive in %1$s</string>
+    <string name="share_chooser_title">Share expenses export</string>
+    <string name="share_subject">Expenses export</string>
+    <string name="no_export_yet">No export yet — tap Export to Excel first</string>
+    <string name="export_meta">%1$s · saved %2$s</string>
+    <string name="export_saved">Export saved</string>
+    <string name="share_failed">Could not share the file: %1$s</string>
+    <!-- Manage categories -->
+    <string name="income_badge">Income</string>
+    <string name="category_colour">Colour</string>
+    <string name="category_emoji">Icon</string>
+    <string name="emoji_none">None</string>
+    <string name="income_hint">Income categories count towards money in, not spending.</string>
+    <string name="category_summary">%1$d categories · %2$d in use</string>
+    <string name="category_unused">Not used yet</string>
+    <string name="category_deleted">Deleted \"%1$s\"</string>
+    <string name="category_name_duplicate">A category with that name already exists</string>
+    <string name="select_colour">Select colour</string>
+    <!-- Counts that must agree in number -->
+    <plurals name="category_usage_count">
+        <item quantity="one">%1$d transaction · %2$s</item>
+        <item quantity="other">%1$d transactions · %2$s</item>
+    </plurals>
+    <plurals name="result_count_plural">
+        <item quantity="one">%1$d transaction</item>
+        <item quantity="other">%1$d transactions</item>
+    </plurals>
+    <plurals name="category_delete_in_use_plural">
+        <item quantity="one">\"%2$s\" is used by %1$d transaction. Deleting it moves it back to Pending.</item>
+        <item quantity="other">\"%2$s\" is used by %1$d transactions. Deleting them moves them back to Pending.</item>
+    </plurals>
+    <!-- Full message viewer -->
+    <string name="message_dialog_title">Message</string>
+    <string name="message_meta">%1$s · %2$s · %3$s</string>
+    <string name="close">Close</string>
+    <string name="copy_message">Copy</string>
+    <string name="message_copied">Message copied</string>
+    <string name="view_full_message">Tap the message to read it in full</string>
+    <string name="pick_category_for_money_in">Pick an income category</string>
+    <string name="pick_category_for_money_out">Pick a spending category</string>
+    <string name="show_all_categories">Show all categories</string>
+    <!-- Multi-select filters -->
+    <string name="filter_apply">Apply</string>
+    <string name="filter_none_selected">Any</string>
+    <string name="filter_n_selected">%1$d selected</string>
+    <!-- Notes -->
+    <string name="note_hint">Note (optional)</string>
+    <string name="note_prefix">Note: %1$s</string>
+    <!-- Theme -->
+    <string name="nav_theme">Theme</string>
+    <string name="theme_title">Appearance</string>
+    <string name="theme_mode">Mode</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_accent">Accent colour</string>
+    <string name="accent_green">Green</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_teal">Teal</string>
+    <!-- Untag -->
+    <string name="move_to_pending">Move back to Pending</string>
+    <string name="moved_to_pending">Moved back to Pending</string>
+    <string name="undo">Undo</string>
+    <!-- Ignored -->
+    <string name="nav_ignored">Ignored</string>
+    <string name="ignored_title">Ignored</string>
+    <string name="ignored_empty">Nothing ignored for this month</string>
+    <string name="ignore_transaction">Ignore this transaction</string>
+    <string name="ignore_hint">It leaves Pending and is left out of all totals.</string>
+    <string name="ignored_done">Moved to Ignored</string>
+    <string name="restored_to_pending">Moved back to Pending</string>
+    <string name="row_actions">What would you like to do?</string>
+    <string name="action_view_message">View full message</string>
+    <!-- Drive backup -->
+    <string name="nav_backup">Backup</string>
+    <string name="backup_account">Google account</string>
+    <string name="backup_connect">Connect Google Drive</string>
+    <string name="backup_disconnect">Disconnect</string>
+    <string name="backup_switch_account">Switch account</string>
+    <string name="backup_not_connected">Not connected</string>
+    <string name="backup_connected">Connected</string>
+    <string name="backup_title">Backup</string>
+    <string name="backup_folder">Folder: %1$s</string>
+    <string name="backup_folder_none">No folder chosen yet</string>
+    <string name="backup_now">Back up now</string>
+    <string name="restore_from_drive">Restore from Drive</string>
+    <string name="backup_last">Last backup: %1$s · %2$s</string>
+    <string name="backup_never">No backup yet</string>
+    <string name="backup_auto">Automatic backup</string>
+    <string name="backup_frequency">Frequency: %1$s</string>
+    <string name="backup_freq_off">Off</string>
+    <string name="backup_freq_daily">Daily</string>
+    <string name="backup_freq_weekly">Weekly</string>
+    <string name="backup_freq_monthly">Monthly</string>
+    <string name="backup_wifi_only">Back up over Wi-Fi only</string>
+    <string name="backup_charging_only">Only while charging</string>
+    <string name="backup_folder_prompt">Name the folder to create in your Google Drive</string>
+    <string name="backup_folder_created">Backup folder created</string>
+    <string name="backup_folder_found">Found your backup folder in Drive</string>
+    <string name="backup_done">Backup complete</string>
+    <string name="restore_done">Restore complete</string>
+    <string name="restore_confirm_title">Restore this backup?</string>
+    <string name="restore_confirm_body">Backed up %1$s
+%2$d transactions · %3$s
+
+This replaces everything currently in the app.</string>
+    <string name="restore_action">Replace my data</string>
+
+    <!-- Backup errors -->
+    <string name="backup_err_no_network">No internet connection. Your backup will run when you are back online.</string>
+    <string name="backup_err_needs_reauth">Google sign-in has expired. Connect your account again.</string>
+    <string name="backup_err_not_signed_in">Connect a Google account first.</string>
+    <string name="backup_err_storage_full">Your Google Drive is full. Free up space and try again.</string>
+    <string name="backup_err_permission">Drive permission was not granted. Connect again and allow access.</string>
+    <string name="backup_err_rate_limited">Google Drive is busy. Try again in a few minutes.</string>
+    <string name="backup_err_folder_missing">The backup folder is gone from Drive. Choose a new one.</string>
+    <string name="backup_err_file_missing">No backup file found in that folder.</string>
+    <string name="backup_err_corrupt">That backup file could not be read, so nothing was changed.</string>
+    <string name="backup_err_server">Google Drive returned an error. Try again later.</string>
+    <string name="backup_err_unknown">Something went wrong.</string>
+    <!-- Multi-select -->
+    <string name="selection_count">%1$d selected</string>
+    <string name="selection_close">Clear selection</string>
+    <string name="action_tag">Tag</string>
+    <string name="action_ignore">Ignore</string>
+    <string name="action_move_pending">To Pending</string>
+    <string name="action_change_category">Change tag</string>
+    <string name="bulk_tagged">Tagged %1$d transactions</string>
+    <string name="bulk_ignored">Moved %1$d to Ignored</string>
+    <string name="bulk_pending">Moved %1$d to Pending</string>
+
+    <!-- Settings hub -->
+    <string name="nav_settings">Settings</string>
+    <string name="settings_section_data">DATA</string>
+    <string name="settings_section_appearance">APPEARANCE</string>
+    <string name="settings_categories_summary">Add, rename and recolour your categories</string>
+    <string name="settings_export_summary">Save an Excel file, share it or send it to Drive</string>
+    <string name="settings_backup_connected">Backing up to %1$s</string>
+    <string name="settings_backup_disconnected">Not connected to Google Drive</string>
+    <string name="settings_theme_summary">%1$s · %2$s</string>
+    <string name="settings_version">Version %1$s</string>
+
+    <!-- App lock -->
+    <string name="settings_section_security">SECURITY</string>
+    <string name="settings_biometric">Biometric lock</string>
+    <string name="settings_biometric_on">Asked for every time the app opens</string>
+    <string name="settings_biometric_off">Open the app without unlocking</string>
+    <string name="settings_biometric_enabled">Biometric lock turned on</string>
+    <string name="biometric_enable_title">Confirm it\'s you</string>
+    <string name="biometric_enable_subtitle">Verify once to turn on the app lock</string>
+    <string name="biometric_unlock_title">Unlock Expense Tracker</string>
+    <string name="biometric_unlock_subtitle">Use your fingerprint, face or screen lock</string>
+    <string name="biometric_unlock">Unlock</string>
+    <string name="biometric_none_enrolled">Set up a fingerprint or screen lock on this phone first</string>
+    <string name="biometric_no_hardware">This phone has no biometric hardware</string>
+    <string name="biometric_unavailable">Not available on this phone right now</string>
+
+    <!-- About -->
+    <string name="nav_about">About</string>
+    <string name="settings_section_app">APP</string>
+    <string name="settings_about_summary">Version and app details</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_tagline">Reads your bank SMS on this phone, sorts it into categories, and shows where the money went.</string>
+    <string name="about_section_details">DETAILS</string>
+    <string name="about_privacy">Your messages are parsed on the device. Nothing is uploaded unless you connect Google Drive yourself.</string>
+
+    <!-- Drawer greeting -->
+    <string name="nav_welcome">Welcome</string>
+    <string name="nav_greeting">Hi, %1$s</string>
+    <string name="nav_greeting_generic">Hi there</string>
+
+    <!-- Backup account line -->
+    <string name="backup_account_line">%1$s\n%2$s</string>
+
+    <!-- Dashboard privacy cover -->
+    <plurals name="dashboard_go_pending">
+        <item quantity="one">Tag %1$d pending transaction</item>
+        <item quantity="other">Tag %1$d pending transactions</item>
+    </plurals>
+    <string name="dashboard_recent">RECENT</string>
+    <string name="dashboard_see_all">See all</string>
+    <string name="dashboard_recent_meta">%1$s \u00b7 %2$s</string>
+    <string name="pending_refresh">Refresh</string>
+    <string name="pending_refreshing">Checking for new messages\u2026</string>
+    <plurals name="pending_refresh_found">
+        <item quantity="one">%1$d new transaction added</item>
+        <item quantity="other">%1$d new transactions added</item>
+    </plurals>
+    <string name="pending_refresh_none">No new messages found</string>
+    <string name="pending_refresh_failed">Could not read messages: %1$s</string>
+    <string name="amount_hidden">••••••</string>
+    <string name="dashboard_reveal">Show or hide totals</string>
+    <string name="dashboard_reveal_title">Show your totals</string>
+    <string name="dashboard_reveal_subtitle">Verify to reveal the figures on this screen</string>
+
+    <!-- Dashboard account header -->
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="header_no_account">Not signed in</string>
+    <string name="header_signed_in">Signed in</string>
+    <string name="header_reconnect_hint">Reconnect Drive to show your account</string>
+    <string name="header_backed_up_hint">Backing up to Google Drive</string>
+    <string name="header_connect_hint">Connect Drive in Settings to back up</string>
+    <string name="header_backup_never">No backup</string>
+    <string name="header_backup_off">Off</string>
+
+    <!-- Accent colours -->
+    <string name="accent_purple">Purple</string>
+    <string name="accent_rose">Rose</string>
+    <string name="accent_crimson">Crimson</string>
+    <string name="accent_amber">Amber</string>
+    <string name="accent_olive">Olive</string>
+    <string name="accent_cyan">Cyan</string>
+    <string name="accent_brown">Brown</string>
+    <string name="accent_slate">Slate</string>
+</resources>

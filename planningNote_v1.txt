@@ -1,0 +1,73 @@
+I need expanse management app (use Andoid studio and Kotlin).
+
+1. The "Starting Line" (Date Filter)
+April 1st, 2026: This is the "magic date." The app is programmed to ignore any SMS received before this.
+
+Automatic Scanning: Every time you receive a text from a bank or credit card, the app reads it. If the date is April 1st or later, it saves a copy in the "SMS-uncategorized" section.
+
+2. The Sorting Process (Uncategorized vs. Categorized)
+This is the heart of your app’s workflow:
+
+SMS-uncategorized (The Inbox): When a new transaction arrives (via UPI or Credit Card), it lands here first. You will see the full SMS text and the amount.
+
+The Action: You click on a transaction and a menu pops up with your 19 categories (Travel, Fuel, Parumal Box, etc.).
+
+Moving Day: Once you pick a category, that transaction disappears from "Uncategorized" and appears in "SMS-categories."
+
+Mistakes? If you realize you put a "Fuel" expense into "Food," you simply go to the "SMS-categories" tab, click it, and change it.
+
+3. The Dashboard (Your Financial Map)
+Pick a Month/Year: At the top of the screen, you choose the month (e.g., May 2026).
+
+The Pie Chart: The app automatically looks at all your "Categorized" items for that month and creates a colorful chart.
+
+Example: If you spent ₹5,000 on Rent and ₹5,000 on Food, the chart will show 50% for each.
+
+Income vs. Expense: The dashboard will also calculate your total "Income" category versus your "Loan" or "Debt" categories to show your balance.
+
+4. Menu & Customization
+Txd Category Menu: This is where you manage your list. If you want to add a new category like "Gifts" or edit "Home-Krr," you do it here.
+
+Navigation: You will have a side menu to quickly jump between the Dashboard, your Inbox (Uncategorized), and your History (Categorized).
+
+5. Saving Your Data (The Excel Export)
+When you are ready to back up your data or view it on a computer:
+
+You click "Export to Excel."
+
+The app creates a spreadsheet file.
+
+The Columns in Excel will be:
+
+Date: The day you spent the money.
+
+Amount: The exact money value.
+
+Category: Which folder you put it in.
+
+Mode: How you paid (UPI or Credit Card).
+
+Description: The full original text of the SMS (so you never lose the original proof).
+
+Google Drive: If you’ve linked your email, the app will automatically upload this file to your Drive so you can open it on any device.
+
+6. Summary of Your Categories
+The app will pre-load these specific names for you:
+
+Personal, Travel, Health/medical, Rent, Home-Krr, Savings, EmergencySavings, Debt, Parumal Box, Mva Acc, ShortLoan, Income, ReturnShortLoan, Food, Fuel, Loan, Others, Savings-ToDad, Savings-PPF.
+
+7. Email Inbox Reading (Pending - noted 2026-09-27)
+Just like the SMS reading feature, the app should read the email inbox and follow the same process used for SMS:
+
+Same Starting Line: Ignore any bank/credit card email received before April 1st, 2026.
+
+Same Sorting Process: Transaction emails are parsed (amount, debit/credit, mode, account/card last 4 digits) and land in "Uncategorized" first, then move to "Categorized" once a category is picked.
+
+Remove Duplicates: The same transaction often arrives as both an SMS and an email. It must be stored only once - match on amount, debit/credit, account/card and a close date/time, and keep a single entry.
+
+Show the Source: Every transaction in the lists (Uncategorized, Categorized, Ignored, Dashboard recent) should show where it came from - "SMS" or "Mail".
+
+Excel Export - Separate Sheets: Everything stays in ONE Excel file, split into separate sheets inside it (instead of a single "Transactions" sheet):
+  - Account sheets: one sheet per bank account / card, listing that account's transactions.
+  - Category sheets: one sheet per category, listing the categorized transactions in it.
+Add a "Source" column (SMS/Mail) alongside Date, Amount, Category, Mode, Note and Description.

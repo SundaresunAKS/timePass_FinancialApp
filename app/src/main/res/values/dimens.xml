@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="accent_stripe_width">6dp</dimen>
+    <!-- Month bar chrome, deliberately understated so the month name leads -->
+    <dimen name="month_bar_icon">12dp</dimen>
+    <dimen name="month_bar_chevron_inset">9dp</dimen>
+
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_subtitle">16sp</dimen>
+    <dimen name="text_body">13sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_amount">19sp</dimen>
+
+    <dimen name="pie_chart_height">280dp</dimen>
+    <dimen name="category_dot_size">12dp</dimen>
+    <dimen name="category_avatar_size">40dp</dimen>
+    <dimen name="accent_swatch_size">44dp</dimen>
+    <dimen name="avatar_size">48dp</dimen>
+    <dimen name="avatar_size_small">28dp</dimen>
+    <!-- Floating drawer button on the toolbar-less Dashboard -->
+    <dimen name="dashboard_menu_size">44dp</dimen>
+    <dimen name="dashboard_menu_radius">22dp</dimen>
+    <!-- Enough top padding that the first card clears that button -->
+    <dimen name="dashboard_menu_clearance">64dp</dimen>
+    <!-- Bottom padding so the last row clears the FAB -->
+    <dimen name="fab_scroll_clearance">88dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+</resources>

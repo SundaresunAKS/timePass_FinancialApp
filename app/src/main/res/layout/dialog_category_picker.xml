@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scrollable root so the sheet can shrink when the keyboard opens and still reach the note
+  field. A plain LinearLayout is simply clipped, hiding whatever is being typed behind the
+  IME.
+-->
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_md"
+            android:text="@string/pick_category"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            tools:text="Pick a spending category" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:hint="@string/note_hint"
+            app:counterEnabled="true"
+            app:counterMaxLength="80">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="80"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- The sheet itself scrolls, so the grid must not scroll independently -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3" />
+
+
+        <!-- Only shown when the transaction is already tagged -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUntag"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/move_to_pending"
+            android:visibility="gone"
+            app:icon="@drawable/ic_close" />
+
+        <!-- Escape hatch: the direction filter is a convenience, not a restriction -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShowAll"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/show_all_categories"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

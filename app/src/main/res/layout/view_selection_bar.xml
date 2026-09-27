@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Contextual bar shown while rows are selected. Sits at the bottom rather than replacing
+  the toolbar, so the month and filters stay visible and the selection can be refined
+  without leaving the mode.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:elevation="8dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/spacing_xs"
+    android:paddingTop="@dimen/spacing_sm"
+    android:paddingEnd="@dimen/spacing_sm"
+    android:paddingBottom="@dimen/spacing_sm">
+
+    <ImageButton
+        android:id="@+id/btnCloseSelection"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/selection_close"
+        android:padding="11dp"
+        android:src="@drawable/ic_close"
+        app:tint="?attr/colorOnPrimary" />
+
+    <TextView
+        android:id="@+id/tvSelectionCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_weight="1"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="@dimen/text_subtitle"
+        android:textStyle="bold"
+        tools:text="3 selected" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSelectionAction1"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimary"
+        tools:text="Tag" />
+
+    <!--
+      Only shown for a selection the action applies to, which today means deleting rows
+      that were typed in by hand. An SMS-derived row has a message behind it, so removing
+      it would only invite the scanner to import it again.
+    -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSelectionAction3"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimary"
+        android:visibility="gone"
+        tools:text="Delete" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSelectionAction2"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimary"
+        tools:text="Ignore" />
+
+</LinearLayout>

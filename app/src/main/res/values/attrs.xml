@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Lighter end of the month-bar gradient; set per accent theme. -->
+    <attr name="colorAccentGradientEnd" format="color" />
+    <!-- Status bar tint; a darker shade of the accent. -->
+    <attr name="colorAccentDark" format="color" />
+</resources>

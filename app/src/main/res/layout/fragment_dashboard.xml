@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <!--
+          Identity row. The drawer button sits outside the card so the card itself has one
+          job and one tap target: it opens Settings, where the account is managed.
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/accountCard"
+                style="@style/Widget.FinancialApp.Card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_md">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_size"
+                        android:layout_height="@dimen/avatar_size">
+
+                        <TextView
+                            android:id="@+id/tvAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_title"
+                            android:textStyle="bold"
+                            tools:text="K" />
+
+                        <ImageView
+                            android:id="@+id/ivAvatarFallback"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_person"
+                            android:visibility="gone"
+                            app:tint="@android:color/white" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_md"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            tools:text="Kalyanasundaresun A" />
+
+                        <TextView
+                            android:id="@+id/tvUserEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_body"
+                            tools:text="sundaresun.aks@gmail.com" />
+                    </LinearLayout>
+
+                    <!-- Backup state only means something once an account is linked. -->
+                    <LinearLayout
+                        android:id="@+id/backupState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivBackupState"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_cloud_off"
+                            app:tint="@color/on_surface_variant" />
+
+                        <TextView
+                            android:id="@+id/tvBackupState"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_caption"
+                            tools:text="1 hr ago" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/open_drawer"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu"
+                app:tint="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <!-- Month bar; the label opens the month/year picker -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:background="@drawable/bg_month_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnPrevMonth"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/previous_month"
+                android:padding="@dimen/month_bar_chevron_inset"
+                android:src="@drawable/ic_chevron_left"
+                app:tint="?attr/colorOnPrimary" />
+
+            <LinearLayout
+                android:id="@+id/btnMonthPicker"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/month_bar_icon"
+                    android:layout_height="@dimen/month_bar_icon"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="?attr/colorOnPrimary" />
+
+                <TextView
+                    android:id="@+id/tvMonthYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="@dimen/text_subtitle"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnNextMonth"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/next_month"
+                android:padding="@dimen/month_bar_chevron_inset"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="?attr/colorOnPrimary" />
+        </LinearLayout>
+
+        <!-- Narrows the whole screen to one account or card. -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAccount"
+            style="@style/Widget.FinancialApp.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/dashboard_all_accounts"
+            app:chipIcon="@drawable/ic_tune"
+            app:chipIconVisible="true" />
+
+        <!--
+          The breakdown leads. It is the only part of the screen that answers "where did
+          it go", so it gets the space above the fold.
+        -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pie_chart_height" />
+
+                <!-- Shown instead of the chart, and only as tall as it needs to be. -->
+                <LinearLayout
+                    android:id="@+id/emptyChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_lg"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/no_data"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_body" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGoPending"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:visibility="gone"
+                        tools:text="Tag 78 pending transactions"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!--
+          Figures in one card rather than three. The eye masks the numbers in place rather
+          than dropping a panel over them, so the row keeps its shape either way and there
+          is no grey slab sitting across the screen.
+        -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_md"
+                android:paddingTop="@dimen/spacing_md"
+                android:paddingEnd="@dimen/spacing_sm"
+                android:paddingBottom="@dimen/spacing_md">
+
+                <LinearLayout
+                    android:id="@+id/amountsRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_income"
+                            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                            android:textColor="@color/on_surface_variant" />
+
+                        <TextView
+                            android:id="@+id/tvTotalIncome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/credit_green"
+                            android:textSize="@dimen/text_subtitle"
+                            android:textStyle="bold"
+                            tools:text="₹1,29,907" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_expense"
+                            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                            android:textColor="@color/on_surface_variant" />
+
+                        <TextView
+                            android:id="@+id/tvTotalExpense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/debit_red"
+                            android:textSize="@dimen/text_subtitle"
+                            android:textStyle="bold"
+                            tools:text="₹2,36,325" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/balance"
+                            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                            android:textColor="@color/on_surface_variant" />
+
+                        <TextView
+                            android:id="@+id/tvBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textSize="@dimen/text_subtitle"
+                            android:textStyle="bold"
+                            tools:text="−₹1,06,418" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnToggleAmounts"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/dashboard_reveal"
+                        android:padding="@dimen/spacing_sm"
+                        android:src="@drawable/ic_eye"
+                        app:tint="?attr/colorPrimary" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!--
+          Recent activity. Without it an untagged month leaves the lower half of the screen
+          blank, which is most of the screen, and this is the one thing there is always
+          something to show.
+        -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/recentCard"
+            style="@style/Widget.FinancialApp.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    style="@style/TextAppearance.FinancialApp.SectionHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/spacing_xs"
+                    android:text="@string/dashboard_recent" />
+
+                <LinearLayout
+                    android:id="@+id/recentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSeeAll"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/dashboard_see_all" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

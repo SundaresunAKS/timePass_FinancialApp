@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Input for a dialog. A bare EditText passed to setView() sits flush against the dialog
+  edges and ignores the app's input styling, so the field is wrapped properly here.
+-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/spacing_lg"
+    android:paddingTop="@dimen/spacing_sm"
+    android:paddingEnd="@dimen/spacing_lg"
+    android:paddingBottom="@dimen/spacing_xs">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilInput"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="60">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="60"
+            android:maxLines="1"
+            tools:text="ExpenseTrackerExportFile" />
+    </com.google.android.material.textfield.TextInputLayout>
+</FrameLayout>

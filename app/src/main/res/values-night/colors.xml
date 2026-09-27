@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Dark overrides. Only the semantic surface/text colours change: layouts reference these
+  names directly, so overriding them here is what makes every screen dark-aware.
+
+  The accent palettes are NOT overridden - a brand colour should stay recognisable in dark
+  mode, and the accents above already have enough contrast against a dark surface.
+
+  Category hues are also left alone: they are user data and must match the pie chart, the
+  row stripes and the Excel export in either theme.
+-->
+<resources>
+    <color name="background">#111512</color>
+    <color name="on_background">#E3E6E3</color>
+    <color name="surface">#1A201C</color>
+    <color name="on_surface">#E3E6E3</color>
+    <color name="surface_variant">#39423C</color>
+    <color name="on_surface_variant">#B7C2BA</color>
+    <color name="outline">#48524B</color>
+    <color name="outline_variant">#2A312C</color>
+
+    <color name="primary_container">#17482C</color>
+    <color name="on_primary_container">#C8F0D6</color>
+    <color name="secondary_container">#5A3B00</color>
+    <color name="on_secondary_container">#FFE7C7</color>
+    <color name="tertiary_container">#332A72</color>
+    <color name="on_tertiary_container">#E3DEFF</color>
+
+    <color name="error">#FF8A80</color>
+    <color name="error_container">#6B221D</color>
+
+    <!-- Direction colours lifted for legibility on a dark surface -->
+    <color name="debit_red">#FF6B6B</color>
+    <color name="debit_red_bg">#3A1F1F</color>
+    <color name="credit_green">#5FD98A</color>
+    <color name="credit_green_bg">#16311F</color>
+
+    <color name="chip_neutral_bg">#2A312C</color>
+    <color name="chip_neutral_text">#B7C2BA</color>
+
+    <color name="mode_upi">#A79BFF</color>
+    <color name="mode_credit_card">#FF8FB1</color>
+    <color name="mode_debit_card">#5FD3C4</color>
+    <color name="mode_neft">#7EC3F0</color>
+    <color name="mode_unknown">#A5B3AC</color>
+</resources>

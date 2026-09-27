@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_sm"
+    android:layout_marginEnd="@dimen/spacing_sm"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:checkedIcon="@drawable/ic_check"
+    app:strokeColor="@color/outline_variant"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Category (or direction) colour stripe; tinted at bind time -->
+        <View
+            android:id="@+id/viewAccent"
+            android:layout_width="@dimen/accent_stripe_width"
+            android:layout_height="match_parent"
+            android:background="@color/mode_unknown" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_md">
+
+            <!-- Amount + date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvAmount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/debit_red"
+                    android:textSize="@dimen/text_amount"
+                    android:textStyle="bold"
+                    tools:text="- ₹1,234.56" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_caption"
+                        tools:text="22 Sep 2026" />
+
+                    <TextView
+                        android:id="@+id/tvSender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        tools:text="AX-INDUSB-S"
+                        tools:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tags: category + payment mode -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chipCategory"
+                    style="@style/Widget.FinancialApp.Tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:background="@drawable/bg_pill"
+                    android:visibility="gone"
+                    tools:text="Food"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/chipPaymentMode"
+                    style="@style/Widget.FinancialApp.Tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill"
+                    tools:text="UPI" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="@dimen/text_body"
+                android:textStyle="italic"
+                android:visibility="gone"
+                tools:text="Note: groceries for the week"
+                tools:visibility="visible" />
+
+            <!-- SMS body preview -->
+            <TextView
+                android:id="@+id/tvSmsBody"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="2"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="@dimen/text_body"
+                tools:text="A/C *XX8607 debited by Rs 113.17 towards amazonpaybalanceload@rapl." />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

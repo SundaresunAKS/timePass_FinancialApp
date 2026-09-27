@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+app/build/
+
+# Local machine config (Android SDK path)
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing keys and secrets
+*.jks
+*.keystore
+google-services.json
+
+# Logs / OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Local tool settings
+.claude/settings.local.json
+.github/modernize/

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  A settings line that toggles rather than navigates. Separate from view_settings_row so
+  neither layout carries a view the other hides; the chevron and the switch never coexist.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/spacing_md"
+    android:paddingTop="@dimen/spacing_sm"
+    android:paddingEnd="@dimen/spacing_md"
+    android:paddingBottom="@dimen/spacing_sm">
+
+    <ImageView
+        android:id="@+id/ivRowIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:importantForAccessibility="no"
+        app:tint="?attr/colorPrimary"
+        tools:src="@drawable/ic_fingerprint" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_md"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvRowTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/text_subtitle"
+            tools:text="Biometric lock" />
+
+        <TextView
+            android:id="@+id/tvRowSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="@dimen/text_body"
+            tools:text="Ask for a fingerprint when the app opens" />
+    </LinearLayout>
+
+    <!--
+      Not clickable itself: the whole row handles the tap and drives the switch, so the
+      small target and the large one cannot disagree about the state.
+    -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:clickable="false"
+        android:focusable="false" />
+
+</LinearLayout>
